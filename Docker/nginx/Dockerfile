@@ -5,10 +5,10 @@ RUN wget http://nginx.org/download/nginx-1.9.7.tar.gz
 RUN tar zxf nginx-1.9.7.tar.gz
 WORKDIR nginx-1.9.7
 RUN ./configure --prefix=/usr/local/nginx && make && make install
-EXPOSE 80
-EXPOSE 443
 RUN echo "daemon off;" >> /usr/local/nginx/conf/nginx.conf
 WORKDIR /root/nginx
 ADD run.sh /run.sh
 RUN chmod 776 /run.sh
+EXPOSE 80
+EXPOSE 443
 CMD ["/run.sh"]
