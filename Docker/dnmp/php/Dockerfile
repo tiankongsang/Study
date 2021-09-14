@@ -7,7 +7,7 @@ RUN sed -i "s|enabled=1|enabled=0|g" /etc/yum/pluginconf.d/fastestmirror.conf &&
     yum clean all && yum makecache
 RUN yum install -y gcc gcc-c++ gd-devel libxml2-devel libcurl-devel libjpeg-devel libpng-devel openssl-devel
 RUN cd /tmp && curl -o php-5.6.31.tar.gz https://museum.php.net/php5/php-5.6.31.tar.gz && \
-    tar php-5.6.31.tar.gz && cd php-5.6.31 && \
+    tar -zxvf php-5.6.31.tar.gz && cd php-5.6.31 && \
     ./configure --prefix=/usr/local/php \
     --with-config-file-path=/usr/local/php/etc \
     --with-mysql --with-mysqli \
