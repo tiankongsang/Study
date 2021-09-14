@@ -6,8 +6,8 @@ RUN sed -i "s|enabled=1|enabled=0|g" /etc/yum/pluginconf.d/fastestmirror.conf &&
     curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo && \
     yum clean all && yum makecache
 RUN yum install -y gcc gcc-c++ gd-devel libxml2-devel libcurl-devel libjpeg-devel libpng-devel openssl-devel
-ADD php-5.6.31.tar.gz /tmp/
-RUN cd /tmp/php-5.6.31 && \
+RUN cd /tmp && wget https://museum.php.net/php5/php-5.6.31.tar.gz && \
+    tar php-5.6.31.tar.gz && cd php-5.6.31 && \
     ./configure --prefix=/usr/local/php \
     --with-config-file-path=/usr/local/php/etc \
     --with-mysql --with-mysqli \
