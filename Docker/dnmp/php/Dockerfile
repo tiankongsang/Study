@@ -1,12 +1,10 @@
 FROM centos:6
-
 LABEL org.opencontainers.image.authors="tiankongsang@outlook.com"
 # 配置 CentOS Yum 源
 RUN sed -i "s|enabled=1|enabled=0|g" /etc/yum/pluginconf.d/fastestmirror.conf && \
-mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak && \
-curl -o /etc/yum.repos.d/CentOS-Base.repo https://www.xmpan.com/Centos-6-Vault-Aliyun.repo && \
-yum clean all && yum makecache
-
+    mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak && \
+    curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo && \
+    yum clean all && yum makecache
 RUN yum install -y gcc gcc-c++ gd-devel libxml2-devel libcurl-devel libjpeg-devel libpng-devel openssl-devel
 ADD php-5.6.31.tar.gz /tmp/
 RUN cd /tmp/php-5.6.31 && \
@@ -22,6 +20,5 @@ RUN cd /tmp/php-5.6.31 && \
     cp ./sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm && \
     chmod +x /etc/init.d/php-fpm
 COPY php.ini /usr/local/php/etc
- 
 EXPOSE 9000
 CMD /etc/init.d/php-fpm start && tail -F /var/log/messages
