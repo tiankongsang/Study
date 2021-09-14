@@ -1,0 +1,5 @@
+f = open("泰戈尔的诗.txt", mode='r')
+content = f.read(10)
+print(content)
+f.close()
+print(type(content))
