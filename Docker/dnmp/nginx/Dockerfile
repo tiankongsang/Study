@@ -7,7 +7,7 @@ RUN sed -i "s|enabled=1|enabled=0|g" /etc/yum/pluginconf.d/fastestmirror.conf &&
     yum clean all && yum makecache
 
 RUN yum install -y gcc gcc-c++ make openssl-devel pcre-devel
-RUN cd /tmp && wget http://nginx.org/download/nginx-1.12.1.tar.gz && \
+RUN cd /tmp && curl -o nginx-1.12.1.tar.gz http://nginx.org/download/nginx-1.12.1.tar.gz && \
     tar nginx-1.12.1.tar.gz && \
     ./configure --prefix=/usr/local/nginx && make -j 2 && make install
 RUN rm -f /usr/local/nginx/conf/nginx.conf
