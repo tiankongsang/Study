@@ -1,4 +1,5 @@
 import numpy as np
+
 data1 = [1, 3, 4, 7]
 w1 = np.array(data1)
 print('w1:', w1)
