@@ -1,0 +1,18 @@
+upstream http_backend {
+    {{range service "nginx"}}
+    server {{.Address}}:{{.Port}};
+    {{end}}
+}
+
+server {
+    listen 83
+    server_name localhost 192.168.73.129;
+    index index.html index.php
+    location / {
+        proxy_set_header HOST $HOST
+        proxy_set_header X-Real-IP $remote_addr
+        proxy_set_header Client-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass http://http_backend
+    }
+}
