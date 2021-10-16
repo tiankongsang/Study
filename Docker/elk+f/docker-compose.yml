@@ -4,12 +4,19 @@ services:
     image: nginx
     container_name: nginx
     hostname: nginx
+    restart: always
     ports:
-    - 80:80
+      - 80:80
     volumes:
-    - ./nginx/log:/var/log/nginx
+      - ./nginx/log:/var/log/nginx
     networks:
       - default
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
   filebeat:
     build:
       context: ./filebeat
@@ -18,31 +25,34 @@ services:
     hostname: filebeat
     volumes:
       - ./nginx/log:/var/log/nginx
+    restart: always
     networks:
       - default
   logstash:
     container_name: logstash
     hostname: logstash
     ports:
-    - 5044:5044
+      - 5044:5044
     build:
       context: ./logstash
       dockerfile: Dockerfile
     volumes:
       - ./logstash/conf:/opt/logstash/conf
+    restart: always
     networks:
       - default
   elasticsearch:
     container_name: elasticsearch
     hostname: elasticsearch
     ports:
-    - 9200:9200
-    - 9300:9300
+      - 9200:9200
+      - 9300:9300
     build:
       context: ./elasticsearch
       dockerfile: Dockerfile
     volumes:
       - ./elasticsearch/log:/var/log/elasticsearch
+    restart: always
     networks:
       - default
   kibana:
@@ -53,6 +63,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - 5601:5601
+    restart: always
     networks:
       - default
 networks:
