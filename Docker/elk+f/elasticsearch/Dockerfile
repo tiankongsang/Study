@@ -12,4 +12,3 @@ RUN chown -R es:es /data/behavior/log-node1
 EXPOSE 9200
 EXPOSE 9300
 CMD su es /usr/local/elasticsearch-6.1.0/bin/elasticsearch
-
