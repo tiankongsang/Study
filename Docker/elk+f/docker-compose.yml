@@ -14,16 +14,6 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
-  filebeat:
-    build:
-      context: ./filebeat
-      dockerfile: Dockerfile
-    container_name: filebeat
-    depends_on:
-      - nginx
-    volumes:
-      - ./nginx/log:/var/log/nginx
-    restart: always
   logstash:
     container_name: logstash
     ports:
@@ -32,7 +22,7 @@ services:
       context: ./logstash
       dockerfile: Dockerfile
     depends_on:
-      - filebeat
+      - nginx
     volumes:
       - ./logstash/conf:/opt/logstash/conf
     restart: always
@@ -59,6 +49,16 @@ services:
     restart: always
     depends_on:
       - elasticsearch
+  filebeat:
+    build:
+      context: ./filebeat
+      dockerfile: Dockerfile
+    container_name: filebeat
+    depends_on:
+      - kibana
+    volumes:
+      - ./nginx/log:/var/log/nginx
+    restart: always
 networks:
   default:
     external:
