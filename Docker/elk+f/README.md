@@ -8,7 +8,7 @@
 mkdir -p /var/log/elasticsearch
 chmod -R 777 /var/log/elasticsearch
 mkdir -p /opt/logstash/conf
-cp ./logstah/logstash-nginx-log.conf /opt/logstash/conf/logstash-nginx-log.conf
+cp ./logstash/conf/logstash-nginx-log.conf /opt/logstash/conf/logstash-nginx-log.conf
 ```
 
 修改系统参数

@@ -1,0 +1,64 @@
+version: "3"
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - /var/log/nginx:/var/log/nginx
+    networks:
+      - elk
+
+  elasticsearch:
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    build:
+      context: ./elasticsearch
+      dockerfile: Dockerfile
+    volumes:
+      - /var/log/elasticsearch:/var/log/elasticsearch
+    networks:
+      - elk
+
+  kibana:
+    container_name: kibana
+    build:
+      context: ./kibana
+      dockerfile: Dockerfile
+    ports:
+      - "5601:5601"
+    networks:
+      - elk
+
+  logstash:
+    container_name: logstash
+    build:
+      context: ./logstash
+      dockerfile: Dockerfile
+    ports:
+      - "5044:5044"
+    volumes:
+      - /opt/logstash/conf:/opt/logstash/conf
+    networks:
+      - elk
+
+  filebeat:
+    container_name: filebeat
+    build:
+      context: ./filebeat
+      dockerfile: Dockerfile
+    depends_on:
+      - elasticsearch
+      - kibana
+      - logstash
+    volumes:
+      - /var/log/nginx:/var/log/nginx
+    networks:
+      - elk
+
+networks:
+  elk:
+    external: true
