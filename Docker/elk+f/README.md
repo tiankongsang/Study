@@ -35,10 +35,21 @@ docker network create elk
 ## Docker 构建
 
 ```Shell
+cd filebeat
 docker build -t filebeat .
+cd logstash
 docker build -t logstash .
+cd elasticsearch
 docker build -t elasticsearch .
+cd kibana
 docker build -t kibana .
+```
+
+## 删除全部 Docker 容器
+
+```Shell
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
 ```
 
 ## Docker 运行
