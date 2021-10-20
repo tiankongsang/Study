@@ -1,8 +1,24 @@
 # Docker
 
+## 安装 Docker
+
+```Shell
+curl -fsSL get.docker.com -o get-docker.sh
+sudo sh get-docker.sh --mirror Aliyun
+```
+
+## 安装 Docker compose
+
+```Shell
+mkdir -p ~/.docker/cli-plugins/
+curl -SL https://github.com/docker/compose/releases/download/v2.0.1/docker-compose-linux-x86_64 -o ~/.docker/cli-plugins/docker-compose
+chmod +x ~/.docker/cli-plugins/docker-compose
+docker compose version
+```
+
 ## 系统环境准备
 
-创建文件夹
+### 创建文件夹
 
 ```shell
 mkdir -p /var/log/elasticsearch
@@ -11,7 +27,7 @@ mkdir -p /opt/logstash/conf
 cp ./logstash/conf/logstash-nginx-log.conf /opt/logstash/conf/logstash-nginx-log.conf
 ```
 
-修改系统参数
+### 修改系统参数
 
 ```Shell
 $ vi /etc/sysctl.conf
@@ -66,4 +82,12 @@ docker run -itd -p 5601:5601 --network elk --name kibana kibana
 
 ```Shell
 watch -n 2 curl -k localhost
+```
+
+## Docker Compose
+
+```Shell
+docker compose pull
+docker compose build
+docker compose up -d
 ```
